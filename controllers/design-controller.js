@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const {Design} = require('../models')
-
+const mongoose = require('../config/connection')
 ///////////////////////////////
 // ROUTES
 ////////////////////////////////
@@ -17,9 +17,16 @@ router.get("/", async (req, res) => {
   }
 });
 
-// // DESIGN CREATE ROUTE
-// router.post("/", async (req, res) =>  {
-// 	res.status(201).json({message: "design create route"})
-// });
+router.get("/id/:id", async (req, res) => {
+    try {
+        console.log(req.params.id)
+    const id = req.params.id
+        res.json(await Design.findById(id));
+      } catch (error) {
+        //send error
+        res.status(400).json(error);
+      }
+    });
+
 
 module.exports = router
